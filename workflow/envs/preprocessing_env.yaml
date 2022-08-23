@@ -1,0 +1,17 @@
+name: COP_preprocessing
+prefix: ~/miniconda3/envs/ITSFASTR
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - bbmap=38.79=h516909a_0
+  - bwa=0.7.17=hed695b0_7
+  - cutadapt=3.3
+  - fastqc=0.11.9
+  - pip=21.0.1
+  - pip:
+    - multiqc==1.12
+  - pandas=1.2.3
+  - qualimap=2.2.2d
+  - sambamba=0.8.1
+  - samtools=1.12

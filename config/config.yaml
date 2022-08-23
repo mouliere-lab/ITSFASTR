@@ -1,0 +1,237 @@
+################################################################################
+########################## GENERAL PARAMETERS ##################################
+################################################################################
+
+# The name of the project will be used to separate the runs.
+ProjName:
+# Path to the sample sheet.
+Samplesheet: ../../../config/samplesheet.csv
+# Sequencing type.
+# Choose the sequencer [Illumina, ONT]. Deafult is 'Illumina'.
+Mode: Illumina
+# Is this a methylome library? Default is 'False'.
+MethLib: False
+# Indexed reference path.
+# If this is a methylome library please choose a converted index!
+RefPath:
+# Path to the directory containing the sample fastqs.
+SamplePath:
+# Output path.
+OutPath:
+# Path to TMPDIR.
+TmpDir:
+# Number of threads to use.
+ThreadNr: 8
+# The mapping quality of reads to be kept.
+FiltQual: 5
+
+################################################################################
+############################## TRIMMING ########################################
+################################################################################
+
+# Choose which trimmer to use. Can be [bbduk, cutadapt, none].
+# Choosing none will turn trimming off.
+# Trimming of Oxford Nanopore reads (Mode: ONT) is automatically done by Porechop
+# so trimmer selection is ignored.
+Trimmer: bbduk
+# General parameters for bbduk.
+BbdukFlags: "ktrim=r k=23 mink=11 hdist=1"
+# Path to the adapters used for trimming with Bbduk.
+Adapters: ../../../resources/Bbduk/adapters.fa
+
+################################################################################
+########################## MARKING DUPLICATES ##################################
+################################################################################
+
+# Choose the duplicate marker to use [sambamba_MD, picard_MD].
+# Default is sambamba_MD.
+DupMarker: sambamba_MD
+
+################################################################################
+######################### ICHORCNA READ DEPTH ##################################
+################################################################################
+
+readCounterScript: readCounter
+chrs: # use this if you want UCSC chromosome naming for hg38
+  chr1,chr2,chr3,chr4,chr5,chr6,chr7,chr8,chr9,chr10,chr11,chr12,chr13,chr14,chr15,chr16,chr17,chr18,chr19,chr20,chr21,chr22
+binSize:  1000000 # set window size to compute coverage
+
+################################################################################
+############################# ICHORCNA CORE ####################################
+################################################################################
+
+ichorCNA_libdir: None
+# included in conda repo
+ichorCNA_rscript: /share/r-ichorcna-0.3.2-1/scripts/runIchorCNA.R
+# use panel matching same bin size (optional)
+ichorCNA_normalPanel:
+# must use gc wig file corresponding to same binSize (required) (included in conda repo)
+ichorCNA_gcWig: /share/r-ichorcna-0.3.2-1/extdata/gc_hg38_1000kb.wig
+# must use map wig file corresponding to same binSize (required) (included in conda repo)
+ichorCNA_mapWig:  /share/r-ichorcna-0.3.2-1/extdata/map_hg38_1000kb.wig
+# use bed file if sample has targeted regions, e.g. exome data (optional)
+ichorCNA_exons:  NULL
+# (included in conda repo)
+ichorCNA_centromere: /share/r-ichorcna-0.3.2-1/extdata/GRCh38.GCA_000001405.2_centromere_acen.txt
+ichorCNA_minMapScore: 0.75
+ichorCNA_chrs: paste0('chr', c(1:22))
+readDepth_chrs: chr1,chr2,chr3,chr4,chr5,chr6,chr7,chr8,chr9,chr10,chr11,chr12,chr13,chr14,chr15,chr16,chr17,chr18,chr19,chr20,chr21,chr22,chrX
+ichorCNA_fracReadsInChrYForMale: 0.002
+ichorCNA_genomeBuild:  hg38
+#> hg38 seems to be a GRCh38 synonym, according to https://www.ncbi.nlm.nih.gov/assembly/GCF_000001405.39, http://lh3.github.io/2017/11/13/which-human-reference-genome-to-use and https://gatk.broadinstitute.org/hc/en-us/articles/360035890951-Human-genome-reference-builds-GRCh38-or-hg38-b37-hg19
+#> See also 'mapWig' and 'centromere' above
+ichorCNA_genomeStyle:  UCSC
+# chrs used for training ichorCNA parameters, e.g. tumor fraction.
+ichorCNA_chrTrain:  paste0('chr', c(1:22))
+# non-tumor fraction parameter restart values; higher values should be included for cfDNA
+ichorCNA_normal:  c(0.95,0.99,0.995,0.999)
+# ploidy parameter restart values
+ichorCNA_ploidy:  c(2)
+ichorCNA_estimateNormal:  TRUE
+ichorCNA_estimatePloidy:  TRUE
+ichorCNA_estimateClonality: TRUE
+# states to use for subclonal CN
+ichorCNA_scStates:  c()
+# set maximum copy number to use
+ichorCNA_maxCN:  3
+# TRUE/FALSE to include homozygous deletion state
+ichorCNA_includeHOMD: FALSE
+# control segmentation - higher (e.g. 0.9999999) leads to higher specificity and fewer segments
+# lower (e.g. 0.99) leads to higher sensitivity and more segments
+ichorCNA_txnE:  0.9999
+# control segmentation - higher (e.g. 10000000) leads to higher specificity and fewer segments
+# lower (e.g. 100) leads to higher sensitivity and more segments
+ichorCNA_txnStrength:  10000
+ichorCNA_plotFileType:  pdf
+ichorCNA_plotYlim:  c(-2,2)
+
+################################################################################
+############### FREIA FRAGMENT END SEQUENCE EXTRACTION #########################
+################################################################################
+
+# Choose the contigs you want to run your analysis on.
+# These names need to be the same as the contigs in the reference.
+# Contigs: 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,X,Y
+# Use this if you want UCSC chromosome naming for hg38:
+Contigs: chr1,chr2,chr3,chr4,chr5,chr6,chr7,chr8,chr9,chr10,chr11,chr12,chr13,chr14,chr15,chr16,chr17,chr18,chr19,chr20,chr21,chr22,chrM
+# The number of bases to be extracted on the fragment ends.
+nBase: 10
+
+################################################################################
+####################### FREIA DATA TRANSFORMATION ##############################
+################################################################################
+
+# The fraction (between 0 and 1) of reads to use. The default is 1.
+SubSampleRate: 1
+# The size (in bases) of the minimum fragment size to analyze. The default is 1.
+FragmSizeMin: 1
+# The size (in bases) of the maximum fragment size to analyze. The default is 500.
+FragmSizeMax: 5000
+# The number of bootstrapped samples to produce.
+# This results in samples where the same read can be present multiple times!
+BsSampNr: 0
+
+################################################################################
+######################## FREIA GROUP COMPARISION ###############################
+################################################################################
+
+# Subseampleing rate of the results.
+SubsetResults: 0
+# The path to the regrouping sheet. If empty will use the original samplesheet.
+Regroup:
+
+################################################################################
+#################### GRIFFIN_LR MAPPABILITY CORRECTION #########################
+################################################################################
+# Path to the Griffin_LR scripts.
+griffin_scripts_dir: ../../scripts/5_Griffin_LR
+
+# Path to the reference genome fasta file.
+RefGenome:
+
+# Chrom sizes for the selected reference genome.
+chrom_sizes: ../../../resources/Griffin_LR/hg38.standard.chrom.sizes
+
+# File containing mappability value for each bp in the genome.
+mappability_bw: ../../../resources/Griffin_LR/k100.Umap.MultiTrackMappability.bw
+mappability_correction: False # Whether to run a mappability correction step, we found that this does not improve signals and we do not recommend it.
+
+# Bed file containing regions to exclude.
+encode_exclude: ../../../resources/Griffin_LR/encode_unified_GRCh38_exclusion_list.bed
+centromeres: ../../../resources/Griffin_LR/hg38_centromeres.bed
+gaps: ../../../resources/Griffin_LR/Ref/hg38_gaps.bed
+patches: ../../../resources/Griffin_LR/hg38_fix_patches.bed
+alternative_haplotypes: ../../../resources/Griffin_LR/hg38_alternative_haplotypes.bed
+
+################################################################################
+######################## GRIFFIN_LR GC CORRECTION ##############################
+################################################################################
+# Path to bed with mappable regions.
+mappable_regions: ../../../resources/Griffin_LR/k100_minus_exclusion_lists.mappable_regions.hg38.bed
+
+# Folder with the GC frequencies for all fragment sizes in the mappable regions (must match the mappable_regions).
+# For typical hg38 WGS the correct path is below.
+genome_GC_frequency: ../../../resources/Griffin_LR/genome_GC_frequency
+
+# Fragment size range to GC correct.
+GC_bias_size_range: 15 500
+
+################################################################################
+#################### GRIFFIN_LR NUCLEOSOME PROFILING ###########################
+################################################################################
+# Path to the mappability file.
+mappability_bw: ../../../resources/Griffin_LR/k100.Umap.MultiTrackMappability.bw
+# Path to chromosome sizes file.
+chrom_sizes_path: ../../../resources/Griffin_LR/hg38.standard.chrom.sizes
+# List of paths to the sites of interest files.
+site_lists:
+  TssA:
+  Quies:
+# Column containing the chromosome in your sites of interest file.
+chrom_column: Chrom
+# Column containing the site position.
+position_column: position
+# Column for indicating site direction. If this column doesn't exist, the script will assume non-directional sites.
+strand_column: Strand
+# Chromosomes to use. Separate by whitespace.
+chroms: chr1 chr2 chr3 chr4 chr5 chr6 chr7 chr8 chr9 chr10 chr11 chr12 chr13 chr14 chr15 chr16 chr17 chr18 chr19 chr20 chr21 chr22
+
+# Window around each site for normalizing to 1 (-5000 5000 bp for typical TFBS WGS analysis)
+norm_window: -5000 5000
+# Range of fragment lengths to be used for analysis. 100 to 200 captures nucleosome sized fragments. 15 to 500 also okay.
+size_range: 100 500
+# Minimum mapping quality to keep a read.
+map_quality: 5
+
+# How many sites to analyze. Use NA/none to analyze all sites.
+number_of_sites: none
+# Column to use for sorting sites. Use none if analyzing all sites.
+sort_by: none
+# Whether to sort sites in ascending order (False if you want to keep sites with a large value in the sort_by column).
+# Use NA/none to analyze all sites.
+ascending: none
+
+# Window around each site to save to outputs.
+save_window: -1000 1000
+# Range of positions used to calculate the central coverage feature.
+center_window: -30 30
+fft_window: -960 960
+fft_index: 10
+# Approximately the fragment length.
+smoothing_length: 165
+
+# Bed files containing regions to exclude.
+encode_exclude: ../../../resources/Griffin_LR/encode_unified_GRCh38_exclusion_list.bed
+centromeres: ../../../resources/Griffin_LR/hg38_centromeres.bed
+gaps: ../../../resources/Griffin_LR/hg38_gaps.bed
+patches: ../../../resources/Griffin_LR/hg38_fix_patches.bed
+alternative_haplotypes: ../../../resources/Griffin_LR/hg38_alternative_haplotypes.bed
+
+step: 15
+
+CNA_normalization: False
+individual: False
+smoothing: True
+
+exclude_zero_mappability: True
+exclude_outliers: True

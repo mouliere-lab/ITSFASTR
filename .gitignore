@@ -1,0 +1,38 @@
+# Credits to Joakim Elofsson, Stack Exchange
+
+# Ignore everything
+*
+
+# But not these files...
+!.gitignore
+!*.smk
+!*.py
+!*.md
+!*.sh
+!*.R
+!*.Rmd
+!*.sbatch
+!*.yaml
+!*.yml
+!*.csv
+!*.fa
+!*.txt
+!*.sizes
+!*.bed
+!*.bedGraph
+
+
+# ...even if they are in subdirectories
+!*/
+
+# ...but not in .snakemake/, conda/ or ... directories
+*.snakemake/
+*conda/
+*.mypy_cache/
+
+# Ignore subrepositories
+workflow/scripts/2_copy_number_analysis/ichorCNA/
+
+# # if the files to be tracked are in subdirectories
+# !*/a/b/file1.txt
+# !*/a/b/c/*

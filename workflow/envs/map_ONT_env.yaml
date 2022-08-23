@@ -1,0 +1,9 @@
+name: Map_ONT
+prefix: ~/miniconda3/envs/ITSFASTR
+channels:
+  - bioconda
+dependencies:
+  - minimap2=2.24
+  - pip:
+    - NanoPlot==1.40.0
+  - samtools=1.12

@@ -1,0 +1,13 @@
+name: copy_number_analysis_env
+prefix: ~/miniconda3/envs/ITSFASTR
+channels:
+  - conda-forge
+  - bioconda
+  - r
+dependencies:
+  - bioconductor-genomeinfodb
+  - bioconductor-genomicranges
+  - bioconductor-hmmcopy
+  - hmmcopy
+  - r-ichorcna=0.3.2-0
+  - samtools=1.12

@@ -1,0 +1,7 @@
+name: Porechop
+prefix: ~/miniconda3/envs/ITSFASTR
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - porechop=0.2.4

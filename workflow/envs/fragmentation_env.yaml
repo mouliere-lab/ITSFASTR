@@ -1,0 +1,8 @@
+name: fragmentation_env
+prefix: ~/miniconda3/envs/ITSFASTR
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - picard=2.22.2=0
+  - samtools=1.12
