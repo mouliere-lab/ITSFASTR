@@ -19,12 +19,15 @@ else:
     exit()
 
 # Get the dir name for the last created conda environment.
-try:
-    fileL = glob.glob('.snakemake/conda/*')
-    conda_dir_path = max(fileL, key=os.path.getctime)
-except:
-    print("Run snakemake with --conda-create-envs-only first!")
-    conda_dir_path = ""
+if config["conda_dir"]:
+    conda_dir_path = config["conda_dir"]
+else:
+    try:
+        fileL = glob.glob('.snakemake/conda/*')
+        conda_dir_path = max(fileL, key=os.path.getctime)
+    except:
+        print("Run snakemake with --conda-create-envs-only first!")
+        conda_dir_path = ""
 
 localrules: all_ichorCNA
 

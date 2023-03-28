@@ -5,4 +5,5 @@ channels:
   - bioconda
 dependencies:
   - picard=2.22.2=0
+  - pandas
   - samtools=1.12

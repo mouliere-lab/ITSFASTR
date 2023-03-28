@@ -26,11 +26,28 @@ if config["Mode"] == "ONT":  # Choose the sequencer used for data.
         input:
             config["OutPath"] + "/" + ProjDirName + "/1_mapping_quality/{sample}/NanoPlot-data.tsv.gz"
         output:
-            config["OutPath"] + "/" + ProjDirName + "/3_fragmentation/{sample}_insert_size_metrics.txt"
+            tmp_dir + "/3_fragmentation/{sample}_insert_size_metrics.txt"
         shell:
            """
-           gzip -dc "{input}" > "{output}"
+           gzip -dc {input} > {output}
            """
+
+    rule ont_insert_size_simplify:
+        input:
+            tmp_dir + "/3_fragmentation/{sample}_insert_size_metrics.txt"
+        output:
+            config["OutPath"] + "/" + ProjDirName + "/3_fragmentation/{sample}_insert_size_metrics.txt"
+        params:
+            mapQ = config["FiltQual"]
+        conda: "../../envs/fragmentation_env.yaml"
+        shell:
+            """
+            python3 ../../scripts/3_fragmentation/insert_size_LR.py \
+                    -i {input} \
+                    -m {params.mapQ} \
+                    -o {output}
+            """
+
 else:
     rule filter_and_index_fragmentation_global:
         input:
