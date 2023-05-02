@@ -235,3 +235,15 @@ smoothing: True
 
 exclude_zero_mappability: True
 exclude_outliers: True
+
+################################################################################
+#################### XENOGRAFT DECONVOLUTION - xenomapping #####################
+################################################################################
+# This tool can be used to separate host and graft reads from ONT seq.
+# Path to the primary reference genome.
+RefPath_Primary:
+# Path to the secondary reference genome.
+RefPath_Secondary: 
+# The minimum mapping score required.
+min_score: 5
+# Split, sorted and indexed bam files will be stored in the "1_mapping" folder.

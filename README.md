@@ -211,7 +211,7 @@ snakemake --printshellcmds \
           -s trimming.smk
 ```
 
-#### 1.2. Mapping
+#### 1.2. Mapping (non-xenograft samples)
 Align the reads to the previously set reference genome by running:
 ```
 snakemake --printshellcmds \
@@ -220,6 +220,7 @@ snakemake --printshellcmds \
           --cores 8 \
           -s mapping.smk
 ```
+
 
 #### 2. Run ichorCNA copy number analysis
 Change directory: `cd ../2_copy_number_analysis`.
@@ -290,6 +291,20 @@ Please download the expected results from [here][13]. The expected results
 archive contains the expected folder structure, quality check results, the copy number
 profile, the fragment length profile, the final files fragment end sequence proportions, diversity 
 and the nucleosome profiles of the dummy data set.
+
+### Xenomapping (xenograft samples only)
+If starting from xenograft samples reads from the host and the graft need to be separated after trimming. To do this, first [create the index files for both the host and the graft genomes](#5.-set-the-path-to-the-indexed-reference-genome). \
+Then add the paths to the [config file](./config/config.yaml) after `RefPath_Primary` and `RefPath_Secondary`. \
+Finally change directory: `cd workflow/rules/6_xenomapping/`
+and run:
+```
+snakemake --printshellcmds \
+          --keep-going \
+          --use-conda \
+          --cores 8 \
+          -s xenomapping_LR.smk
+```
+The deconvoluted and mapped reads are stored in the same folder as the output of the normal mapping is.
 
 ## Citation
 For usage of the ITSFASTR pipeline please cite:
