@@ -223,8 +223,20 @@ snakemake --printshellcmds \
 
 
 #### 2. Run ichorCNA copy number analysis
-Change directory: `cd ../2_copy_number_analysis`.
+Change directory: `cd ../2_copy_number_analysis`.  
+The ichorCNA tool requires the path to the ichorCNA script to be set in the config file. To set the path first run:
 
+```
+snakemake --printshellcmds \
+          --keep-going \
+          --use-conda \
+          --cores 8 \
+          -s ichorCNA.smk \
+          --conda-create-envs-only
+```
+This will create the environment and provide you with a path to it, similar to `.snakemake/conda/103fe64931ac3076f3305793328dd331_`. Paste this path into the [config file](./config/config.yaml) after the `conda_dir:` parameter.
+
+Now run:
 ```
 snakemake --printshellcmds \
           --keep-going \
@@ -232,7 +244,6 @@ snakemake --printshellcmds \
           --cores 8 \
           -s ichorCNA.smk
 ```
-
 #### 3. Run the fragment size analysis
 Change directory: `cd ../3_fragmentation`.
 

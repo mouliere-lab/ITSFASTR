@@ -3,7 +3,7 @@
 ################################################################################
 
 # The name of the project will be used to separate the runs.
-ProjName:
+ProjName: 
 # Path to the sample sheet.
 Samplesheet: ../../../config/samplesheet.csv
 # Sequencing type.
@@ -13,9 +13,9 @@ Mode: Illumina
 MethLib: False
 # Indexed reference path.
 # If this is a methylome library please choose a converted index!
-RefPath:
+RefPath: 
 # Path to the directory containing the sample fastqs.
-SamplePath:
+SamplePath: 
 # Output path.
 OutPath:
 # Path to TMPDIR.
@@ -60,19 +60,22 @@ binSize:  1000000 # set window size to compute coverage
 ############################# ICHORCNA CORE ####################################
 ################################################################################
 
+# Path to the conda directory.
+# If None, Snakemake expects the path to be '.snakemake/conda/'.
+conda_dir: 
 ichorCNA_libdir: None
 # included in conda repo
-ichorCNA_rscript: /share/r-ichorcna-0.3.2-1/scripts/runIchorCNA.R
+ichorCNA_rscript: /share/r-ichorcna-0.3.2-2/scripts/runIchorCNA.R
 # use panel matching same bin size (optional)
-ichorCNA_normalPanel:
+ichorCNA_normalPanel: /home/norbert/Documents/ichorCNA_PON/panel_of_normals_median_STM-SLX-13222.rds
 # must use gc wig file corresponding to same binSize (required) (included in conda repo)
-ichorCNA_gcWig: /share/r-ichorcna-0.3.2-1/extdata/gc_hg38_1000kb.wig
+ichorCNA_gcWig: /share/r-ichorcna-0.3.2-2/extdata/gc_hg38_1000kb.wig
 # must use map wig file corresponding to same binSize (required) (included in conda repo)
-ichorCNA_mapWig:  /share/r-ichorcna-0.3.2-1/extdata/map_hg38_1000kb.wig
+ichorCNA_mapWig:  /share/r-ichorcna-0.3.2-2/extdata/map_hg38_1000kb.wig
 # use bed file if sample has targeted regions, e.g. exome data (optional)
 ichorCNA_exons:  NULL
 # (included in conda repo)
-ichorCNA_centromere: /share/r-ichorcna-0.3.2-1/extdata/GRCh38.GCA_000001405.2_centromere_acen.txt
+ichorCNA_centromere: /share/r-ichorcna-0.3.2-2/extdata/GRCh38.GCA_000001405.2_centromere_acen.txt
 ichorCNA_minMapScore: 0.75
 ichorCNA_chrs: paste0('chr', c(1:22))
 readDepth_chrs: chr1,chr2,chr3,chr4,chr5,chr6,chr7,chr8,chr9,chr10,chr11,chr12,chr13,chr14,chr15,chr16,chr17,chr18,chr19,chr20,chr21,chr22,chrX
