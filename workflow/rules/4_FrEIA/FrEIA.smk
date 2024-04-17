@@ -3,7 +3,7 @@ import numpy as np
 
 configfile: "../../../config/config.yaml"  # Set config file.
 # Read sample sheet in a dataframe.
-Samplesheet = pd.read_csv(config["Samplesheet"], delim_whitespace=True)
+Samplesheet = pd.read_csv(config["Samplesheet"], sep='\s+')
 
 ControlGroup = [c for c in Samplesheet["group"].unique() if "*" in c]
 AffectedGroups = ",".join(np.setdiff1d(Samplesheet["group"].unique(),

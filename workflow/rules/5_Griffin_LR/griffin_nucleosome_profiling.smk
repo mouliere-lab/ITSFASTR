@@ -13,8 +13,7 @@
 import pandas as pd
 
 configfile: "../../../config/config.yaml"  # Set config file.
-Samplesheet = pd.read_csv(config["Samplesheet"],
-                          delim_whitespace=True)  # Read sample sheet in a dataframe.
+Samplesheet = pd.read_csv(config["Samplesheet"], sep='\s+')  # Read sample sheet in a dataframe.
 
 # Select output path depending on run mode.
 RefPath = config["RefGenome"]
