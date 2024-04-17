@@ -5,7 +5,7 @@ configfile: "../../../config/config.yaml"  # Set config file.
 ProjDirName = config["ProjName"] + "/trimmed"
 tmp_dir = config["TmpDir"] + "/" + ProjDirName  # Set TEMPDIR.
 # Read sample sheet in a dataframe.
-Samplesheet = pd.read_csv(config["Samplesheet"], sep='\s+')
+Samplesheet = pd.read_csv(config["Samplesheet"], sep=' ')
 
 localrules: all_trim_ONT, all_trim_Illumina
 
