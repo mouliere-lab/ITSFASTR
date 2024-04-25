@@ -153,6 +153,8 @@ The mappability track used by Griffin LR is big, thus it is not provided.
 [Download][17] a mappability track and place it in [/resources/Griffin_LR](resources/Griffin_LR).
 #### 10. Set path to the reference genome
 Set the path to the reference genome fasta file.
+#### 11. Create the sites of interest file
+Griffin LR requires one or more sites of interest file. Each file can contain multiple sites of the same tipe. For an example please see the [Running ITSFASTR on a local machine using Snakemake](#running-itsfastr-on-a-local-machine-using-snakemake).
 
 ### Running ITSFASTR on a HPC cluster using Snakemake and Slurm
 This is the recommended way of running the pipeline, as some steps are
